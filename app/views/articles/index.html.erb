@@ -1,0 +1,47 @@
+<div class="row corrige reciente">
+	<div class="col-md-4 card">
+		<div>
+			<small>ARTÍCULO RECIENTE</small>
+		</div>
+		<div class="contenido">
+			<h1><span><%= @recent.title %></span></h1>
+			<p><span><%= truncate(Sanitize.fragment(@recent.body), length: 150) %></span></p>
+			<%= link_to "Leer más...", @recent, class:"read-con" %>
+		</div>
+	</div>
+	<div class="col-md-8 cover background-cover">
+	</div>
+</div>
+<div class="cuerpo-index">
+	<div class="row corrige black" style="padding: 1.5em;">
+		<div class="col-md-12">
+			<h1 class="center" style="text-align: center;">Encuentra más artículos</h1>
+			<h2 class="center">Artículos en esta página</h2>
+		</div>
+	</div>
+	
+	<div class="row corrige" style="padding: 2.5em;">
+		<%= render @articles[1..@articles.last.id] %>
+	</div>
+
+	<div class="container row corrige">
+		<div class="col-md-offset-1 col-md">
+			<%= will_paginate @articles, renderer: BootstrapPagination::Rails, previous_label: "Más nuevos", next_label: "Más viejos", inner_window: 1, outer_window: 0 %>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function() {
+			$('.pagination').addClass('row');
+			$('.pagination li').addClass('col-md-1');
+			$('.prev').removeClass('col-md-1').addClass('col-md-2');
+			$('.next').removeClass('col-md-1').addClass('col-md-2');
+			$('.cover').css({
+				"background-image":"url(<%= @recent.cover.url(:original) %>)",
+				"background-repeat":"no-repeat"
+			});
+			$('.reciente .card').css({
+				'background-color' : '<%= @recent.categories.first.color %>'
+			});
+		});
+	</script>
+</div>	

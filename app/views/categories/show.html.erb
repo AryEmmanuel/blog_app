@@ -1,0 +1,24 @@
+<div class="container">
+	<h1 class="white">
+	  Artículos de <%= @category.name %>
+	</h1>
+</div>
+<div class="row corrige" style="padding:2.5em;">
+	<%= render @articles %>
+</div>
+<div class="container row corrige">
+	<div class="col-md-offset-1 col-md">
+		<%= will_paginate @articles, renderer: BootstrapPagination::Rails, previous_label: "Más nuevos", next_label: "Más viejos", inner_window: 1, outer_window: 0 %>
+	</div>
+</div>
+<script>
+	$(document).ready(function(){
+		$(".cuerpo").css({
+			'background-color':'<%= @category.color %>'
+		});
+		$('.pagination').addClass('row');
+		$('.pagination li').addClass('col-md-1');
+		$('.prev').removeClass('col-md-1').addClass('col-md-2');
+		$('.next').removeClass('col-md-1').addClass('col-md-2');
+	});
+</script>

@@ -1,0 +1,22 @@
+<div class="comment animated zoomInDown">
+	<div class="row corrige">
+		<div class="col-md">
+			<p>
+				<small>
+					<span>
+						<%= image_tag comment.user.avatar, class:"avatar-image" %>
+					</span>
+					<strong class="comment-user"><%= comment.user.name %></strong>
+					<span><%= time_ago_in_words(comment.created_at) %></span>
+				</small>
+			</p>
+		</div>
+	</div>
+	<div class="row corrige">
+		<div class="col-md">
+			<p class="comment-body">
+				<%= comment.body.html_safe %>
+			</p>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,27 @@
+<div class="col-md-6 super-arti">
+	<div class="article-container">
+		<div class="no-padding pic background-cover" style="background-image: url(<%= article.cover.url %>)">
+			<h1 class=" shdwblck white" style="margin-bottom: 0; margin-top:0;">
+				<%= link_to article.title, article, class:"white" %>
+			</h1>
+		</div>
+		<div class="row corrige">
+			<% article.categories.each do |cat| %>
+				<div class="col-md col-sm col-xs" style="background-color: <%= cat.color %>; height: 1em;"></div>
+			<% end %>
+		</div>
+		<div class="row corrige">
+			<div class="col-md col-sm col-xs details white">
+				<span>
+					<%= image_tag article.user.avatar, class:"avatar-nav-image" %>
+					Por <%= article.user.name %>
+				</span>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$('.pic').css({
+		"background-repeat":"no-repeat",
+	});
+</script>

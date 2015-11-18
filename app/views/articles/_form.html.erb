@@ -1,0 +1,116 @@
+<%= form_for(@article, html:{ id:"articles_form" }) do |f| %>
+	<div class="nuevo-articulo white">
+		<div class="row center-xs middle-xs corrige new-article">
+			<div class="col-md-11 col-xs-10 center">
+				<h2>Crear artículo</h2>
+			</div>
+			
+			<%= f.submit "Enviar", class:"col-md-1 col-xs-2 btn-new-art white center-xs" %>
+		</div>
+		<div class="row corrige center-xs middle-xs" style="background-color: rgb(6,67,125);">
+			<div class="col-md">
+				<p>
+					Selecciona una o más categorías:
+					<% @categories.each do |category| %>
+						<span class="field" style="background-color: <%= category.color %>; padding:10px;">
+							<%= check_box_tag "categories[]", category.id %> <%= category.name %>
+						</span>
+					<% end %>
+				</p>
+			</div>
+			<div class="col-md">
+				<div class="field white">
+					Portada: <%= f.file_field :cover %>
+				</div>
+			</div>
+		</div>
+	</div>
+	<% if @article.errors.full_messages.length > 0 %>
+		<div class="row corrige errores center-xs">
+			<div class="col-md-11">
+				<div class="row corrige">
+					<% @article.errors.full_messages.each do |message| %>
+						<div class="white col-md">
+							<span class="error">
+								<%= message %>
+							</span>
+						</div>
+					<% end %>
+				</div>
+			</div>
+			<div class="col-md-1">
+				<button type="button" id="close" class="close white">
+					<span class="white" aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		</div>
+	<% end %>
+	<div class="portada background-cover">
+		<div class="row pr-art corrige" style="bottom:0px;">
+			<div class="col-md">
+				<h1><span id="ti">
+						<%= f.text_field :title, placeholder: "Escribe el título de tu artículo", class:"form-control h900xxxlarge shdwblck white form-title", id:"title" %>
+				</span></h1>
+				<p><span></span></p>
+			</div>
+		</div>
+	</div>
+	<div class="row corrige details white">
+		<div class="col-md-offset-1 col-md-4">
+			<p>
+				<span>
+					<%= image_tag current_user.avatar, class:"avatar-nav-image" %>
+				</span>
+				Escrito por <%= current_user.name %>
+				<span style="text-transform:uppercase;">
+					<small>
+						 | En este momento
+					</small>
+				</span>
+			</p>
+		</div>
+		<div class="col-md-offset-4 col-md-3">
+			<p>
+				0 visitas
+			</p>
+		</div>
+	</div>
+	<div class="corrige article">
+		<div>
+			<div class="field">
+				<%= f.hidden_field :body, id:"body-textarea" %>
+				<%= f.hidden_field :markup_body, id:"markup-body-textarea" %>
+				<div style="height: 45.5em;" id="epiceditor">
+						
+				</div>
+			</div>
+		</div>
+	</div>
+<% end %>
+<script>
+	var editor = new EpicEditor({
+		textarea: "markup-body-textarea",
+		file: {
+			name: "nuevo_articulo"
+		}
+	});
+	editor.load();
+
+	$("#articles_form").on("submit", function() {
+		$("#body-textarea").val( editor.exportFile("nuevo_articulo", "html") );
+		$("#markup-body-textarea").val( editor.exportFile("nuevo_articulo") );
+	});
+
+	$('#article_cover').change( function(event) {
+		var tmppath = URL.createObjectURL(event.target.files[0]);
+    	$('.portada').css({
+    		'background-image': 'url(' + tmppath + ')',
+    		"background-repeat":"no-repeat"
+    	});
+	});
+
+	$('#close').click(function() {
+		$('.errores').remove();
+	});
+
+</script>

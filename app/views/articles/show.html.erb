@@ -1,0 +1,53 @@
+<%= article_cover @article %>
+<div class="row corrige">
+	<% @article.categories.each do |category| %>
+		<div class="col-md col-sm col-xs" style="background-color: <%= category.color %>; padding: 1em; text-align: center;">
+			<%= link_to category.name, category, class:"white" %>
+		</div>
+	<% end %>
+</div>
+<div class="row corrige details white">
+	<div class="col-md-offset-1 col-md-4">
+		<p>
+			<% unless @article.user.nil? %>
+				<span>
+					<%= image_tag @article.user.avatar, class:"avatar-nav-image" %>
+				</span>
+				Escrito por <%= @article.user.name %>
+			<% end %>
+			<strong> | </strong>
+			<span style="text-transform:uppercase;">
+				<small>
+					<%= time_ago_in_words(@article.created_at) %> ago.
+				</small>
+			</span>
+		</p>
+	</div>
+	<div class="col-md-offset-4 col-md-3">
+		<p>
+			<%= @article.visits_count %> visitas
+		</p>
+	</div>
+</div>
+<div class="corrige article">
+	<div>
+		<%= Sanitize.fragment(@article.body, Sanitize::Config::RELAXED).html_safe %>
+	</div>
+</div>
+
+<%= render 'comments' %>
+
+<script>
+	$(document).ready(function() {
+		var titulo = document.getElementById('ti').innerText;
+		document.title = titulo + " | Blog de Ary";
+		$('.pagination').addClass('row');
+		$('.pagination li').addClass('col-md-1');
+		$('.prev').removeClass('col-md-1').addClass('col-md-2');
+		$('.next').removeClass('col-md-1').addClass('col-md-2');
+		$('.portada').css({
+			"background-image":"url(<%= @article.cover.url(:original) %>)",
+			"background-repeat":"no-repeat"
+		});
+	});
+</script>

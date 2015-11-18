@@ -1,0 +1,70 @@
+<header class="main-header">
+	<nav class="be-main black">
+		<ul class="no-list row center-xs middle-xs c">
+			<li class="col-md">
+				<h1 class="no-margin" id="logo"><%= link_to "Blog de Ary", root_path %> <sup><small>BETA</small></sup></h1>
+			</li>
+			<li class="col-md pag">
+				<%= link_to "Artículos", articles_path %>
+			</li>
+			<% @categories.each do |category| %>
+				<li class="col-md pag">
+					<%= link_to category.name, category %>
+				</li>
+			<% end %>
+			<% if user_signed_in? %>
+				<% unless current_user.permission_level === 1 %>
+					<li class="col-md pag">
+						<span class="art">
+							<i class="glyphicon glyphicon-pencil"></i>
+							<%= link_to "Nuevo artículo", new_article_path %>
+						</span>
+					</li>
+				<% end %>
+				<li class="col-md pag">
+					<div class="dropdown">
+						<button class="cuenta dropdown-toggle black" role="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							<span>
+								<%= image_tag current_user.avatar, class:"avatar-nav-image" %>
+							</span>
+							<%= select_name(current_user) %>
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+							<li role="presentation">
+						    	<%= link_to "Mi perfil", edit_user_registration_path, role:"menuitem", tabindex:"-1" %>
+						    </li>
+						    <% case current_user.permission_level %>
+						    	<% when 2 %>
+						    		<li role="presentation">
+								    	<%= link_to "Mis artículos", welcome_index_path, role:"menuitem", tabindex:"-1" %>
+								    </li>
+						    	<% when 3 %>
+						    		<li role="presentation">
+								    	<%= link_to "Mis artículos", welcome_index_path, role:"menuitem", tabindex:"-1" %>
+								    </li>
+									<li role="presentation">
+								    	<%= link_to "Administrar artículos", dashboard_path, role:"menuitem", tabindex:"-1" %>
+								    </li>
+						    <% end %>
+						    <li role="presentation">
+						    	<%= link_to "Configuración", edit_user_registration_path, role:"menuitem", tabindex:"-1" %>
+						    </li>
+						    <li role="presentation" class="divisor"></li>
+						    <li role="presentation">
+						    	<%= link_to "Cerrar sesión", destroy_user_session_path, method: :delete, role:"menuitem", tabindex:"-1" %>
+						    </li>
+						</ul>
+					</div>
+				</li>
+			<% else %>
+				<li class="col-md pag">
+					<%= link_to "Iniciar sesión", new_user_session_path %>
+				</li>
+				<li class="col-md pag">
+					<%= link_to "Regístrate", new_user_registration_path %>
+				</li>
+			<% end %>
+		</ul>
+	</nav>
+</header>

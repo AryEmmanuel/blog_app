@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Blog de Ary</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href='http://fonts.googleapis.com/css?family=Muli' rel='stylesheet' type='text/css'>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+	<%= render "partials/navigation" %>
+	
+	<% if notice %>
+		<div id="notice_wrapper" class="noti">
+			<p class="notice"><%= notice %></p>
+		</div>
+	<% elsif alert %>
+		<div id="alert_wrapper" class="noti">
+			<p class="alert"><%= alert %></p>
+		</div>
+	<% end %>
+
+	<div class="cuerpo">
+		<%= yield %>
+	</div>
+
+	<%= render "partials/footer" %>
+
+</body>
+</html>

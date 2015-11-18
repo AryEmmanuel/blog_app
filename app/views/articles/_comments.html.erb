@@ -1,0 +1,31 @@
+<div class="comments-container">
+	<div class="container">
+		<div class="row corrige large-padding row-center-xs">
+			<div class="col-md">
+				<h1><span class="comments-count"><%= @article.comments.count %></span> Comentario(s)</h1>
+			</div>
+		</div>
+		<% if user_signed_in? %>
+			<div class="row corrige large-padding">
+				<div class="field">
+					<%= render "comments/form" %>
+				</div>
+			</div>
+		<% end %>
+		<div class="row corrige">
+			<div class="col-md">
+				<%= will_paginate @pag, renderer: BootstrapPagination::Rails, previous_label: "Más nuevos", next_label: "Más viejos" %>
+			</div>
+		</div>
+		<div class="row corrige">
+			<div class="col-md comments-box">
+				<%= render @article.comments %>
+			</div>
+		</div>
+		<div class="row corrige">
+			<div class="col-md">
+				<%= will_paginate @pag, renderer: BootstrapPagination::Rails, previous_label: "Más nuevos", next_label: "Más viejos" %>
+			</div>
+		</div>
+	</div>
+</div>

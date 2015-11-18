@@ -1,0 +1,58 @@
+<div class="dashboard">
+	<h1 class="text-center margen">Panel de administrador</h1>
+	<div class="container">
+		<%= will_paginate @articles, renderer: BootstrapPagination::Rails, previous_label: "Más nuevos", next_label: "Más viejos", inner_window: 1, outer_window: 0 %>
+	</div>
+	<% @articles.each do |t| %>
+		<div class="row mi-p middle-xs">
+
+			<div class="col-md-4">
+				<h2 class="center-xs"><%= t.title %></h2>
+			</div>
+
+			<div class="col-md">
+				<p>
+					Created <%= time_ago_in_words(t.created_at) %> ago
+				</p>
+			</div>
+			<div class="col-md">
+				<p>
+					Visitas: <%= t.visits_count %>
+				</p>
+			</div>
+			<div class="col-md">
+				<% if t.may_publish? %>
+					<%= link_to "Publicar", "/articles/#{t.id}/publish", class:"blue-btn", method: :put %>
+				<% else %>
+					
+				<% end %>
+			</div>
+			<div class="col-md">
+				<%= link_to "Revisar", t, class:"read-btn" %>
+			</div>
+
+			<div class="col-md">
+				<span class="delete-btn">
+					<i class="glyphicon glyphicon-trash"></i>
+					<%= link_to "Eliminar", t, data: {confirm: "¿Estas seguro de que deseas eliminar este artículo?"}, method: :delete %>
+				</span>
+			</div>
+
+			<div class="col-md">
+				<%= link_to "Editar", edit_article_path(t), class:"edit-btn" %>
+			</div>
+
+		</div>
+	<% end %>
+	<div class="container">
+		<%= will_paginate @articles, renderer: BootstrapPagination::Rails, previous_label: "Más nuevos", next_label: "Más viejos", inner_window: 1, outer_window: 0 %>
+	</div>
+</div>
+<script>
+	$(document).ready(function() {
+		$('.pagination').addClass('row');
+		$('.pagination li').addClass('col-md-1');
+		$('.prev').removeClass('col-md-1').addClass('col-md-2');
+		$('.next').removeClass('col-md-1').addClass('col-md-2');
+	});
+</script>

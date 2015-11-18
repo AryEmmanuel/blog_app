@@ -1,0 +1,11 @@
+<html>
+<body style="font-family: Segoe UI;">
+	<h1><%= @article.title %></h1>
+	<p>
+		<%= truncate(@article.body, length:30) %>
+	</p>
+	<p>
+		<%= link_to "Leer más", article_url(@article), style: "color: rgb(5, 124, 100); text-decoration: none;" %>
+	</p>
+</body>
+</html>
